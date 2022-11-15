@@ -1,0 +1,21 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Crime report server.",
+        "title": "Crime Report API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.crimereporter.io/support",
+            "email": "support@crimereporter.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "api.crimereporter.io",
+    "basePath": "/v2",
+    "paths": {}
+}

@@ -1,0 +1,16 @@
+basePath: /v2
+host: api.crimereporter.io
+info:
+  contact:
+    email: support@crimereporter.io
+    name: API Support
+    url: http://www.crimereporter.io/support
+  description: Crime report server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Crime Report API
+  version: "1.0"
+paths: {}
+swagger: "2.0"
