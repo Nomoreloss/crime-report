@@ -23,11 +23,12 @@ ALTER SCHEMA role OWNER TO postgres;
 SET search_path TO pg_catalog,public,role;
 -- ddl-end --
 
--- object: public."user" | type: TABLE --
-DROP TABLE IF EXISTS public."user" CASCADE;
-CREATE TABLE public."user" (
+-- object: public."users" | type: TABLE --
+DROP TABLE IF EXISTS public."users" CASCADE;
+CREATE TABLE public."users" (
 	id uuid NOT NULL,
 	username varchar(100),
+	password varchar(100),
 	email varchar(100) NOT NULL,
 	first_name varchar(200) NOT NULL,
 	last_name varchar(200) NOT NULL,
@@ -42,10 +43,10 @@ CREATE TABLE public."user" (
 	active boolean NOT NULL,
 	created_at timestamptz NOT NULL,
 	updated_at timestamptz NOT NULL,
-	CONSTRAINT pk_user_id PRIMARY KEY (id)
+	CONSTRAINT pk_users_id PRIMARY KEY (id)
 );
 -- ddl-end --
-ALTER TABLE public."user" OWNER TO postgres;
+ALTER TABLE public."users" OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.crime | type: TABLE --
@@ -69,6 +70,7 @@ CREATE TABLE public.role (
 	id uuid NOT NULL,
 	name varchar(100) NOT NULL,
 	description text,
+	access_level smallint NOT NULL,
 	created_at timestamptz NOT NULL,
 	updated_at timestamptz NOT NULL,
 	CONSTRAINT pk_role_id PRIMARY KEY (id)
@@ -93,8 +95,8 @@ CREATE TABLE public.crime_case (
 -- ddl-end --
 
 -- object: fk_role_id | type: CONSTRAINT --
-ALTER TABLE public."user" DROP CONSTRAINT IF EXISTS fk_role_id CASCADE;
-ALTER TABLE public."user" ADD CONSTRAINT fk_role_id FOREIGN KEY (role)
+ALTER TABLE public."users" DROP CONSTRAINT IF EXISTS fk_role_id CASCADE;
+ALTER TABLE public."users" ADD CONSTRAINT fk_role_id FOREIGN KEY (role)
 REFERENCES public.role (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
@@ -102,14 +104,14 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- object: fk_reporter_id | type: CONSTRAINT --
 ALTER TABLE public.crime_case DROP CONSTRAINT IF EXISTS fk_reporter_id CASCADE;
 ALTER TABLE public.crime_case ADD CONSTRAINT fk_reporter_id FOREIGN KEY (reporter)
-REFERENCES public."user" (id) MATCH SIMPLE
+REFERENCES public."users" (id) MATCH SIMPLE
 ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --
 
 -- object: fk_handler_id | type: CONSTRAINT --
 ALTER TABLE public.crime_case DROP CONSTRAINT IF EXISTS fk_handler_id CASCADE;
 ALTER TABLE public.crime_case ADD CONSTRAINT fk_handler_id FOREIGN KEY (handler)
-REFERENCES public."user" (id) MATCH SIMPLE
+REFERENCES public."users" (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
